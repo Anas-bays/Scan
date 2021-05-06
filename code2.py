@@ -24,3 +24,12 @@ print(mem)
 
 print("\n")
 
+# Return system swap memory statistics as a named tuple including the following fields
+with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
+    for i in range(100):
+        sleep(0.02)
+        swap = psutil.swap_memory() # the percentage usage calculated as (total - available) / total * 100
+        bar.next()
+bar.finish()
+mem2 = {'Total': get_size(swap.total), 'Used': get_size(swap.used), 'Free': get_size(swap.free), 'Percentage': f'{swap.percent} %'}
+print(mem2)
