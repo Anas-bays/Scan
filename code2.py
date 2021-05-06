@@ -11,7 +11,7 @@ def get_size(bytes, suffix="B"):
         bytes /= factor
 
 # Return statistics about system memory usage        
-print("Scanning Ram : \n")
+print("Scanning RAM: \n")
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     for i in range(100):
         sleep(0.02)
