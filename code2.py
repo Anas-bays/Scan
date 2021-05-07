@@ -15,7 +15,7 @@ print("Scanning RAM: \n")
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     for i in range(100):
         sleep(0.02)
-        svmem = psutil.virtual_memory()
+        svmem = psutil.virtual_memory() # physical memory usage
         bar.next()
     
     # to calculate percentage of available memory
