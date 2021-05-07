@@ -17,9 +17,14 @@ with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
         sleep(0.02)
         svmem = psutil.virtual_memory()
         bar.next()
+    
+    # to calculate percentage of available memory
+    avmem = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
+    prcntg = '{:.1f} %'.format(avmem)
 bar.finish()
+
 # put the object in a dictionary
-mem = {'Total': get_size(svmem.total), 'Available': get_size(svmem.available), 'Percentage': f'{svmem.percent} %', 'Used': get_size(svmem.used), 'Free': get_size(svmem.free)}
+mem = {'Total': get_size(svmem.total), 'Percentage-available': prcntg, 'Available': get_size(svmem.available), 'Percentage-used': f'{svmem.percent} %', 'Used': get_size(svmem.used), 'Free': get_size(svmem.free)}
 print(mem)
 
 print("\n")
