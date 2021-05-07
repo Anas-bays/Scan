@@ -38,3 +38,15 @@ with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
 bar.finish()
 mem2 = {'Total': get_size(swap.total), 'Used': get_size(swap.used), 'Free': get_size(swap.free), 'Percentage': f'{swap.percent} %'}
 print(mem2)
+
+# Return an iterator yielding a WindowsService class instance for all Windows services installed
+with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
+    for i in range(100):
+        sleep(0.02)
+        winserv = list(psutil.win_service_iter())
+        s = psutil.win_service_get('alg')
+        s.as_dict()
+        bar.next()
+bar.finish()
+print(winserv)
+print(s)
