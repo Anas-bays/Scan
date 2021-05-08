@@ -18,7 +18,7 @@ def get_size(bytes, suffix="B"):
 # End
       
 print("Scanning RAM: \n")
-print("system virtual memory \n")
+print("system virtual memory: \n")
 # Return statistics about system memory usage
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     for i in range(100):
@@ -68,22 +68,26 @@ print(s.as_dict())
 # End
 '''
 
+print("\n")
+
 print("Services: \n")
 # Get all Windows services using the WMI module
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
-    print("ID:      Name:\n")
     for i in range(100):
         sleep(0.02)
-        for process in c.Win32_Process ():
-            print (f"{process.ProcessId}   {process.Name}")
+        
         bar.next()
+print("ID:     Name:\n")
+for process in c.Win32_Process ():
+    print (f"{process.ProcessId}       {process.Name}")
 bar.finish()
+
 # Get get a specific Windows service
 for process in c.Win32_Process (name="notepad.exe"):
-    print (f"{process.ProcessId}   {process.Name}")
+    print (f"{process.ProcessId}       {process.Name}")
 # End
 
-# calculate how much 
+# calculate how much Processes are runnig
 for process in c.Win32_Process():
     proc.append(process.ProcessId)
 print(f"{len(proc)} are running in your Device.")
