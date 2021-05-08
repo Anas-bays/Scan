@@ -5,6 +5,8 @@ from progress.bar import Bar
 
 # Connecting
 c = wmi.WMI()
+# stock here Process Id
+proc = []
 
 # function to get the Size
 def get_size(bytes, suffix="B"):
@@ -14,20 +16,20 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f} {unit}{suffix}"
         bytes /= factor
 # End
-
-# Return statistics about system memory usage        
+      
 print("Scanning RAM: \n")
+print("system virtual memory \n")
+# Return statistics about system memory usage
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     for i in range(100):
         sleep(0.02)
         svmem = psutil.virtual_memory() # physical memory usage
         bar.next()
-    
+
     # to calculate percentage of available memory
     avmem = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
     prcntg = '{:.1f} %'.format(avmem)
 bar.finish() 
-
 # put the object in a dictionary
 mem = {'Total': get_size(svmem.total), 'Percentage-available': prcntg, 'Available': get_size(svmem.available), 'Percentage-used': f'{svmem.percent} %', 'Used': get_size(svmem.used), 'Free': get_size(svmem.free)}
 print(mem)
@@ -35,6 +37,7 @@ print(mem)
 
 print("\n")
 
+print("system swap memory: \n")
 # Return system swap memory statistics as a named tuple including the following fields
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     for i in range(100):
@@ -65,14 +68,24 @@ print(s.as_dict())
 # End
 '''
 
+print("Services: \n")
 # Get all Windows services using the WMI module
 with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
+    print("ID:      Name:\n")
     for i in range(100):
-      sleep(0.02)
-      for process in c.Win32_Process ():
-        print (f"{process.ProcessId}   {process.Name}")
-      bar.next()
+        sleep(0.02)
+        for process in c.Win32_Process ():
+            print (f"{process.ProcessId}   {process.Name}")
+        bar.next()
 bar.finish()
 # Get get a specific Windows service
 for process in c.Win32_Process (name="notepad.exe"):
-  print (f"{process.ProcessId}   {process.Name}")
+    print (f"{process.ProcessId}   {process.Name}")
+# End
+
+# calculate how much 
+for process in c.Win32_Process():
+    proc.append(process.ProcessId)
+print(f"{len(proc)} are running in your Device.")
+# End
+    
