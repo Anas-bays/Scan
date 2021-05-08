@@ -1,6 +1,10 @@
 import psutil
+import wmi
 from time import sleep
 from progress.bar import Bar
+
+# Connecting
+c = wmi.WMI()
 
 # function to get the Size
 def get_size(bytes, suffix="B"):
@@ -9,6 +13,7 @@ def get_size(bytes, suffix="B"):
         if bytes < factor:
             return f"{bytes:.2f} {unit}{suffix}"
         bytes /= factor
+# End
 
 # Return statistics about system memory usage        
 print("Scanning RAM: \n")
@@ -21,11 +26,12 @@ with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     # to calculate percentage of available memory
     avmem = psutil.virtual_memory().available * 100 / psutil.virtual_memory().total
     prcntg = '{:.1f} %'.format(avmem)
-bar.finish()
+bar.finish() 
 
 # put the object in a dictionary
 mem = {'Total': get_size(svmem.total), 'Percentage-available': prcntg, 'Available': get_size(svmem.available), 'Percentage-used': f'{svmem.percent} %', 'Used': get_size(svmem.used), 'Free': get_size(svmem.free)}
 print(mem)
+# End
 
 print("\n")
 
@@ -38,6 +44,7 @@ with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
 bar.finish()
 mem2 = {'Total': get_size(swap.total), 'Used': get_size(swap.used), 'Free': get_size(swap.free), 'Percentage': f'{swap.percent} %'}
 print(mem2)
+# End
 
 '''
 # Return an iterator yielding a WindowsService class instance for all Windows services installed.
@@ -46,12 +53,26 @@ with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
     for i in range(100):
         sleep(0.02)
         winserv = list(psutil.win_service_iter())
-        s = psutil.win_service_get('alg')
+        s = psutil.win_service_get('alg') # windows service by name
         bar.next()
 bar.finish()
+
 print(winserv)
+
 print("\n")
+
 print(s.as_dict())
+# End
 '''
 
-# 
+# Get all Windows services using the WMI module
+with Bar('Progress:', fill='▋', suffix='%(percent).1f%% complete') as bar:
+    for i in range(100):
+      sleep(0.02)
+      for process in c.Win32_Process ():
+        print (f"{process.ProcessId}   {process.Name}")
+      bar.next()
+bar.finish()
+# Get get a specific Windows service
+for process in c.Win32_Process (name="notepad.exe"):
+  print (f"{process.ProcessId}   {process.Name}")
