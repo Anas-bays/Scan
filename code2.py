@@ -90,6 +90,6 @@ for process in c.Win32_Process (name="notepad.exe"):
 # calculate how much Processes are runnig
 for process in c.Win32_Process():
     proc.append(process.ProcessId)
-print(f"{len(proc)} are running in your Device.")
+print(f"{len(proc)} Processes are running in your Device.")
 # End
     
