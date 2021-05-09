@@ -92,4 +92,6 @@ for process in c.Win32_Process():
     proc.append(process.ProcessId)
 print(f"{len(proc)} Processes are running in your Device.")
 # End
+
+# ex:7 étudiant : Alaa Mostafa/Hamed Şahîn/Elanigri Zakaria/Anas Elbair. 
     
