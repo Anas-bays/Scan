@@ -1,9 +1,15 @@
 import psutil
+'''
+(python system and process utilities) 
+psutil is a cross-platform library for retrieving information on running processes and system utilization (CPU, memory, disks, network, sensors) in Python.
+It is useful mainly for system monitoring, profiling, limiting process resources and the management of running processes.
+'''
 import wmi
 from time import sleep
 from progress.bar import Bar
 
 # Connecting
+# Windows Management Instrumentation
 c = wmi.WMI()
 # stock here Process Id
 proc = []
